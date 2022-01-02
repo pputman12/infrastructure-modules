@@ -33,6 +33,55 @@ provider "okta" {
 
 
 #-------------------------------------------------------------------------------------------------------------------------------------
+# VAULT VARIABLES 
+# Refers to variables for Hashicorp Vault in variables.tf
+#-------------------------------------------------------------------------------------------------------------------------------------
+
+provider "vault" {
+  address = var.vault_address
+}
+
+data "vault_generic_secret" "okta_creds" {
+  path = var.vault_okta_secret_path
+}
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------
+# GOOGLE CREDENTIALS
+# Google api token file
+#-------------------------------------------------------------------------------------------------------------------------------------
+
+
+provider "googleworkspace" {
+  customer_id             = var.google_customer_id
+  impersonated_user_email = var.google_impersonated_user_email
+  credentials             = file(var.google_credentials)
+  oauth_scopes            = var.google_oauth_scopes 
+}
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------
+# OKTA CREDENTIALS
+# allows login to okta, api_token pointing here to data source created for hashicorp vault secure secret storage
+#-------------------------------------------------------------------------------------------------------------------------------------
+
+provider "okta" {
+  org_name  = var.okta_org_name
+  base_url  = var.okta_account_url
+  api_token = data.vault_generic_secret.okta_creds.data[var.okta_api_token]
+}
+
+
+
+
+
+
+
+
+
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------
 # DATA FOR ASSIGNMENTS TO APP AND GCP ROLES
 # Local variables set the group app assignments (RBAC), the user app assignments (ABAC), the mapped users (role permissions in GCP)
 # and the app configuration (per app/domain settings)
