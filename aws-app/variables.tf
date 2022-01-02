@@ -1,8 +1,46 @@
-variable "aws_region" {
-  type = string
+#-------------------------------------------------------------------------------------------------------------------------------------
+# HASHICORP VAULT VARIABLES 
+# The vault server IP and Port, along with the path to our okta api token stored securely in vault
+#-------------------------------------------------------------------------------------------------------------------------------------
+
+variable "vault_address" {
+  description = "Hashicorp Vault Server Address"
+  type        = string
+}
+
+variable "vault_okta_secret_path" {
+  description = "The path to access the okta credentials in Vault"
+  type        = string
 }
 
 
+#-------------------------------------------------------------------------------------------------------------------------------------
+# OKTA CREDENTIAL VARIABLES 
+# Variables for Okta credentials
+#-------------------------------------------------------------------------------------------------------------------------------------
+
+variable "okta_org_name" {
+  description = "The okta account to connect to"
+  type        = string
+}
+
+variable "okta_account_url" {
+  description = "base okta url"
+  type        = string
+}
+
+variable "okta_api_token" {
+  type    = string
+}
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------
+# AWS REGION
+#-------------------------------------------------------------------------------------------------------------------------------------
+
+variable "aws_region" {
+  type = string
+}
 
 #-------------------------------------------------------------------------------------------------------------------------------------
 # ASSIGNMENTS TO THE AWS APP
@@ -30,7 +68,7 @@ variable "aws_saml_app_filter" {
 
 variable "app_name" {
   type    = string
-  default = "amazon_aws"
+  default = "aws"
 }
 
 variable "okta_appname" {
