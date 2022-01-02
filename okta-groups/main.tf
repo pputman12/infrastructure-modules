@@ -15,6 +15,34 @@ terraform {
 
 
 #-------------------------------------------------------------------------------------------------------------------------------------
+# VAULT VARIABLES 
+# Refers to variables for Hashicorp Vault in variables.tf
+#-------------------------------------------------------------------------------------------------------------------------------------
+
+provider "vault" {
+  address = var.vault_address
+}
+
+data "vault_generic_secret" "okta_creds" {
+  path = var.vault_okta_secret_path
+}
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------
+# OKTA CREDENTIALS
+# allows login to okta, api_token pointing here to data source created for hashicorp vault secure secret storage
+#-------------------------------------------------------------------------------------------------------------------------------------
+
+provider "okta" {
+  org_name  = var.okta_org_name
+  base_url  = var.okta_account_url
+  api_token = data.vault_generic_secret.okta_creds.data[var.okta_api_token]
+}
+
+
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------
 # OKTA RULE TO GROUP CREATION/MAPPING 
 # This lets you create a new group dynamically by specifying OKTA's extremely granular rules.  The First resource will make a group
 # with a name starting with app-${appname}  and then will automatically use the rbac expression language to map to the created rule.
