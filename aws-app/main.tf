@@ -17,6 +17,11 @@ terraform {
   }
 }
 
+provider aws {
+  region = var.aws_region
+}
+
+
 data "okta_groups" "okta_groups" {}
 
 locals {

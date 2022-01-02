@@ -15,4 +15,4 @@ variable "policies" {
 
 variable "aws_region" {
   type = string
-}  
+}

@@ -1,3 +1,9 @@
+variable "aws_region" {
+  type = string
+}
+
+
+
 #-------------------------------------------------------------------------------------------------------------------------------------
 # ASSIGNMENTS TO THE AWS APP
 # This lets you specify another name for the trusted identity provider in AWS if desired, fine to leave as default otherwise.
