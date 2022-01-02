@@ -44,7 +44,7 @@ variable "google_credentials" {
   type = string
 }
 variable "google_oauth_scopes" {
-  type = string
+  type = list(string)
 }
 
 
