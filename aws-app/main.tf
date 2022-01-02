@@ -52,7 +52,10 @@ provider "okta" {
 }
 
 
-
+#-------------------------------------------------------------------------------------------------------------------------------------
+# AWS APP FILTER SETTINGS
+# These local variables let us filter the groups assigned to the aws application.
+#-------------------------------------------------------------------------------------------------------------------------------------
 
 
 data "okta_groups" "okta_groups" {}
@@ -62,6 +65,11 @@ locals {
   app_group_assignments = [for group in local.app_groups : group if contains(keys(var.accounts), group.account_name)]
   app_configuration     = { for name, account in var.accounts : name => merge(account, { "app_display_name" = var.app_display_name, app_settings_json = local.app_settings_json }) }
 
+
+#-------------------------------------------------------------------------------------------------------------------------------------
+# AWS APP SETTINGS
+# These settings control the group to aws account - role mapping
+#-------------------------------------------------------------------------------------------------------------------------------------
 
 
   app_settings_json = {

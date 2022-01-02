@@ -58,21 +58,6 @@ provider "okta" {
 }
 
 
-
-
-
-
-
-
-
-
-
-#-------------------------------------------------------------------------------------------------------------------------------------
-# DATA FOR ASSIGNMENTS TO APP AND GCP ROLES
-# Local variables set the group app assignments (RBAC), the user app assignments (ABAC), the mapped users (role permissions in GCP)
-# and the app configuration (per app/domain settings)
-#-------------------------------------------------------------------------------------------------------------------------------------
-
 #-------------------------------------------------------------------------------------------------------------------------------------
 # OKTA ATTRIBUTE SEARCH
 # Data source searches for the GcpRoles attribute and pulls users out
@@ -86,6 +71,11 @@ data "okta_users" "gcpUsers" {
   }
 }
 
+#-------------------------------------------------------------------------------------------------------------------------------------
+# DATA FOR ASSIGNMENTS TO APP AND GCP ROLES
+# Local variables set the group app assignments (RBAC), the user app assignments (ABAC), the mapped users (role permissions in GCP)
+# and the app configuration (per app/domain settings)
+#-------------------------------------------------------------------------------------------------------------------------------------
 
 locals {
 

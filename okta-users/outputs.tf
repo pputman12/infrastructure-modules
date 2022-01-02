@@ -1,4 +1,4 @@
 output "users" {
-  value = okta_user.user
+  value     = okta_user.user
   sensitive = true
 }

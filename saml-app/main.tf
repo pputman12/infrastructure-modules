@@ -14,8 +14,8 @@ terraform {
 }
 
 locals {
-  groups_merged_with_app_id = [ for group in var.group_assignments : merge(group, { for name, app in okta_app_saml.saml_app : "app_id" => app.id if name == group.account_name })]
-  users_merged_with_app_id = [ for user in var.user_assignments : merge(user, { for name, app in okta_app_saml.saml_app : "app_id" => app.id if name == user.account_name })]
+  groups_merged_with_app_id = [for group in var.group_assignments : merge(group, { for name, app in okta_app_saml.saml_app : "app_id" => app.id if name == group.account_name })]
+  users_merged_with_app_id  = [for user in var.user_assignments : merge(user, { for name, app in okta_app_saml.saml_app : "app_id" => app.id if name == user.account_name })]
 }
 
 resource "okta_app_saml" "saml_app" {
@@ -33,7 +33,7 @@ resource "okta_app_saml" "saml_app" {
 
 
 resource "okta_app_group_assignments" "group_assignments" {
-  for_each = { for group in local.groups_merged_with_app_id : group.name => group }
+  for_each   = { for group in local.groups_merged_with_app_id : group.name => group }
   app_id     = each.value.app_id
   depends_on = [okta_app_saml.saml_app]
 
@@ -47,5 +47,5 @@ resource "okta_app_user" "user_assignments" {
   app_id   = each.value.app_id
   user_id  = each.value.user_id
   username = each.value.user
-} 
+}
 

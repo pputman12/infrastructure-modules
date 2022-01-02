@@ -48,32 +48,20 @@ provider "okta" {
 # go back into the google api and recreate the saml integrtion.  We can dynamically create the assignemtns to it.
 #-------------------------------------------------------------------------------------------------------------------------------------
 
-
 data "okta_groups" "okta_groups" {}
-
 
 locals {
   app_groups            = [for group in data.okta_groups.okta_groups.groups : merge(group, { "role" = element(split("-", group.name), 3), "account_name" = element(split("-", group.name), 2) }) if(var.app_name == element(split("-", group.name), 1))]
   app_group_assignments = [for group in local.app_groups : group if contains(keys(var.accounts), group.account_name)]
 
-
   app_configuration = { for name, account in var.accounts : name => merge(account, { "app_display_name" = var.app_display_name, app_settings_json = var.app_settings_json }) }
 }
-
-#  app_users    = { for user in data.okta_users.gcpUsers.users : user.login =>  merge({"id" = user.id},  jsondecode(user.custom_profile_attributes)) }
-#  app_user_assignments = flatten([ for username, user  in local.app_users : distinct([ for role in user.gcpRoles: { "user" = username , "account_name" = element(split("|", role), 1), "user_id" = user.id } ])])
-#}
-#
-
-
-
 
 module "saml-app" {
   source            = "../saml-app/"
   accounts          = var.accounts
   okta_appname      = var.okta_appname
   app_configuration = local.app_configuration
-  #  user_assignments = local.app_user_assignments
   group_assignments = local.app_group_assignments
 }
 

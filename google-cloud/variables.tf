@@ -33,9 +33,6 @@ variable "okta_api_token" {
 }
 
 
-
-
-
 #-------------------------------------------------------------------------------------------------------------------------------------
 # GOOGLE PROVIDER CREDENTIALS
 # Configuration for the google cloud
@@ -59,7 +56,10 @@ variable "google_credentials" {
 }
 
 
-
+#-------------------------------------------------------------------------------------------------------------------------------------
+# APPLICATION CONFIGURATION
+# Configuration for the saml application
+#-------------------------------------------------------------------------------------------------------------------------------------
 
 variable "app_name" {
   type    = string
@@ -84,6 +84,3 @@ variable "app_settings_json" {
   type    = map(any)
   default = {}
 }
-
-
-

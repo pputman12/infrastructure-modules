@@ -66,6 +66,12 @@ variable "aws_saml_app_filter" {
   default = "okta"
 }
 
+#-------------------------------------------------------------------------------------------------------------------------------------
+# APP CONFIGURATION VARIABLES 
+# Configuration variables for the saml application
+#-------------------------------------------------------------------------------------------------------------------------------------
+
+
 variable "app_name" {
   type    = string
   default = "aws"

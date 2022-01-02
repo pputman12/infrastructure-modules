@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------------------------------------------------------------------------
 
 terraform {
-  required_version = "~> 1.1.0" 
+  required_version = "~> 1.1.0"
   required_providers {
     okta = {
       source  = "okta/okta"
@@ -38,8 +38,6 @@ provider "okta" {
   base_url  = var.okta_account_url
   api_token = data.vault_generic_secret.okta_creds.data[var.okta_api_token]
 }
-
-
 
 
 #-------------------------------------------------------------------------------------------------------------------------------------

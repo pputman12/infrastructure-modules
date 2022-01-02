@@ -32,6 +32,10 @@ variable "okta_api_token" {
   type    = string
 }
 
+
+
+
+
 variable "google_customer_id" {
   type = string
 }
@@ -48,16 +52,10 @@ variable "google_oauth_scopes" {
 }
 
 
-
-
-
-
-
 #-------------------------------------------------------------------------------------------------------------------------------------
 # APPLICATION CONFIGURATION
 # Configuration for the saml application
 #-------------------------------------------------------------------------------------------------------------------------------------
-
 
 variable "app_name" {
   type    = string

@@ -1,3 +1,8 @@
+variable "aws_region" {
+  type = string
+}
+
+
 #-------------------------------------------------------------------------------------------------------------------------------------
 # IAM POLICY LIST
 # A list of objects, with a json encoded IAM Policy as the last parameter
@@ -11,8 +16,4 @@ variable "policies" {
     tags        = map(string)
     policy      = string
   }))
-}
-
-variable "aws_region" {
-  type = string
 }

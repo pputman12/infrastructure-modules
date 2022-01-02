@@ -7,15 +7,15 @@ variable "okta_appname" {
 }
 
 variable "user_assignments" {
-  type = list(map(string))
+  type    = list(map(string))
   default = []
 }
 
 variable "group_assignments" {
-  type = list(map(string))
+  type    = list(map(string))
   default = []
 }
 
 variable "app_configuration" {
-  type = map(any) 
+  type = map(any)
 }
