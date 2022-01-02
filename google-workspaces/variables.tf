@@ -32,6 +32,27 @@ variable "okta_api_token" {
   type    = string
 }
 
+variable "google_customer_id" {
+  type = string
+}
+
+variable "impersonated_user_email" {
+  type = string
+}
+
+variable "credentials" {
+  type = string
+}
+variable "oauth_scopes" {
+  type = string
+}
+
+
+
+
+
+
+
 #-------------------------------------------------------------------------------------------------------------------------------------
 # APPLICATION CONFIGURATION
 # Configuration for the saml application
