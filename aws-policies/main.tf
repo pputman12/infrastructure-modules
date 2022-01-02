@@ -14,6 +14,13 @@ terraform {
 }
 
 
+
+provider "aws" {
+  region = var.aws_region 
+}
+
+
+
 #-------------------------------------------------------------------------------------------------------------------------------------
 # IAM POLICY GENERATOR 
 # This Resource will generate policies from a list of objects, defined in variables file

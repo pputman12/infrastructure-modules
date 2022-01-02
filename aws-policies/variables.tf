@@ -12,3 +12,7 @@ variable "policies" {
     policy      = string
   }))
 }
+
+variable "aws_region" {
+  type = string
+}  
