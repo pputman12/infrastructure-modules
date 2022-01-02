@@ -42,7 +42,7 @@ locals {
 
 
 module "saml-app" {
-  source            = "https://github.com/my-gh-account/infrastructure-modules//saml-app?ref=v0.0.1"
+  source            = "../saml-app/"
   accounts          = var.accounts
   okta_appname      = var.okta_appname
   app_configuration = local.app_configuration

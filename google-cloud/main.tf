@@ -79,8 +79,7 @@ resource "google_project_iam_member" "rolemapping" {
 #-------------------------------------------------------------------------------------------------------------------------------------
 #
 module "saml-app" {
-  source = "https://github.com/my-gh-account/infrastructure-modules//saml-app?ref=v0.0.1"
-  #  source            = "../../../modules/accounts/saml-app/"
+  source            = "../saml-app/"
   accounts          = var.accounts
   okta_appname      = var.okta_appname
   app_configuration = local.cloud_app_configuration
