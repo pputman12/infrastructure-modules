@@ -36,14 +36,14 @@ variable "google_customer_id" {
   type = string
 }
 
-variable "impersonated_user_email" {
+variable "google_impersonated_user_email" {
   type = string
 }
 
-variable "credentials" {
+variable "google_credentials" {
   type = string
 }
-variable "oauth_scopes" {
+variable "google_oauth_scopes" {
   type = string
 }
 
