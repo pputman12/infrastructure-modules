@@ -15,6 +15,32 @@ terraform {
 
 
 #-------------------------------------------------------------------------------------------------------------------------------------
+# VAULT VARIABLES 
+# Refers to variables for Hashicorp Vault in variables.tf
+#-------------------------------------------------------------------------------------------------------------------------------------
+
+provider "vault" {
+  address = var.vault_address
+}
+
+data "vault_generic_secret" "okta_creds" {
+  path = var.vault_okta_secret_path
+}
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------
+# OKTA CREDENTIALS
+# allows login to okta, api_token pointing here to data source created for hashicorp vault secure secret storage
+#-------------------------------------------------------------------------------------------------------------------------------------
+
+provider "okta" {
+  org_name  = var.okta_org_name
+  base_url  = var.okta_account_url
+  api_token = data.vault_generic_secret.okta_creds.data[var.api_token]
+}
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------
 # OKTA DYNAMIC USER CREATOR 
 # Speciy user in variable in live module to create.
 #-------------------------------------------------------------------------------------------------------------------------------------
