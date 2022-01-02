@@ -17,12 +17,6 @@ terraform {
   }
 }
 
-provider "okta" {
-  org_name  = var.okta_org_name
-  base_url  = var.okta_account_url
-  api_token = data.vault_generic_secret.okta_creds.data[var.okta_api_token]
-}
-
 
 #-------------------------------------------------------------------------------------------------------------------------------------
 # VAULT VARIABLES 
