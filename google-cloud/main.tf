@@ -17,6 +17,21 @@ terraform {
   }
 }
 
+
+provider "google" {
+  project     = var.google_terraform_project
+  region      = var.google_region
+  zone        = var.google_zone
+  credentials = file(var.google_credentials)
+}
+
+provider "okta" {
+  org_name  = var.okta_org_name
+  base_url  = var.okta_account_url
+  api_token = data.vault_generic_secret.okta_creds.data[var.okta_api_token]
+}
+
+
 #-------------------------------------------------------------------------------------------------------------------------------------
 # DATA FOR ASSIGNMENTS TO APP AND GCP ROLES
 # Local variables set the group app assignments (RBAC), the user app assignments (ABAC), the mapped users (role permissions in GCP)
