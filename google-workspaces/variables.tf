@@ -74,7 +74,7 @@ variable "app_display_name" {
   default = "google"
 }
 
-variable "google_workspace_accounts" {
+variable "accounts" {
   type = map(any)
 }
 
