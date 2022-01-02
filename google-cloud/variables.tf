@@ -14,7 +14,7 @@ variable "google_region" {
 
 variable "google_zone" {
   type        = string
-
+}
 
 
 
