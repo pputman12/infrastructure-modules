@@ -17,9 +17,42 @@ terraform {
   }
 }
 
-provider aws {
+#-------------------------------------------------------------------------------------------------------------------------------------
+# AWS PROVIDER MODULE
+# Lets us use AWS resources
+#-------------------------------------------------------------------------------------------------------------------------------------
+
+provider "aws" {
   region = var.aws_region
 }
+
+#-------------------------------------------------------------------------------------------------------------------------------------
+# VAULT VARIABLES 
+# Refers to variables for Hashicorp Vault in variables.tf
+#-------------------------------------------------------------------------------------------------------------------------------------
+
+provider "vault" {
+  address = var.vault_address
+}
+
+data "vault_generic_secret" "okta_creds" {
+  path = var.vault_okta_secret_path
+}
+
+
+#-------------------------------------------------------------------------------------------------------------------------------------
+# OKTA CREDENTIALS
+# allows login to okta, api_token pointing here to data source created for hashicorp vault secure secret storage
+#-------------------------------------------------------------------------------------------------------------------------------------
+
+provider "okta" {
+  org_name  = var.okta_org_name
+  base_url  = var.okta_account_url
+  api_token = data.vault_generic_secret.okta_creds.data[var.api_token]
+}
+
+
+
 
 
 data "okta_groups" "okta_groups" {}
@@ -28,11 +61,6 @@ locals {
   app_groups            = [for group in data.okta_groups.okta_groups.groups : merge(group, { "role" = element(split("-", group.name), 3), "account_name" = element(split("-", group.name), 2) }) if(var.app_name == element(split("-", group.name), 1))]
   app_group_assignments = [for group in local.app_groups : group if contains(keys(var.accounts), group.account_name)]
   app_configuration     = { for name, account in var.accounts : name => merge(account, { "app_display_name" = var.app_display_name, app_settings_json = local.app_settings_json }) }
-
-
-  #  app_users    = { for user in data.okta_users.gcpUsers.users : user.login =>  merge({"id" = user.id},  jsondecode(user.custom_profile_attributes)) }
-  #  app_user_assignments = flatten([ for username, user  in local.app_users : distinct([ for role in user.gcpRoles: { "user" = username , "account_name" = element(split("|", role), 1), "user_id" = user.id } ])])
-
 
 
 
@@ -111,6 +139,5 @@ module "saml-app" {
   accounts          = var.accounts
   okta_appname      = var.okta_appname
   app_configuration = local.app_configuration
-  #  user_assignments = local.app_user_assignments
   group_assignments = local.app_group_assignments
 }
