@@ -68,7 +68,7 @@ provider "okta" {
 #-------------------------------------------------------------------------------------------------------------------------------------
 
 data "okta_users" "google_users" {
-  for_each = toset([for name, account in var.google_workspace_accounts : name])
+  for_each = toset([for name, account in var.accounts : name])
   search {
     name       = "profile.google"
     value      = each.value
