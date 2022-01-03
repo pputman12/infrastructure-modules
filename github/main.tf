@@ -60,11 +60,13 @@ resource "github_actions_secret" "github-action-terraform-access-key" {
   repository       = "github-action-terraform"
   secret_name      = "AWS_ACCESS_KEY_ID"
   plaintext_value  = data.vault_generic_secret.aws_access_key.data[var.aws_access_key]
-
+  depends_on       = [github_repository.github-action-terraform]
 }
 
 resource "github_actions_secret" "github-action-terraform-secret-key" {
   repository       = "github-action-terraform"
   secret_name      = "AWS_SECRET_ACCESS_KEY"
   plaintext_value  = data.vault_generic_secret.aws_secret_key.data[var.aws_secret_key]
+  depends_on       = [github_repository.github-action-terraform]
+
 }
