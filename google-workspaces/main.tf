@@ -88,7 +88,7 @@ locals {
   # Sets the domain to create for the application, its display name, and settings from specified variables 
   #-------------------------------------------------------------------------------------------------------------------------------------
 
-  app_configuration = { for name, account in var.google_workspace_accounts : name => merge(account, { "app_display_name" = var.app_display_name, app_settings_json = var.app_settings_json }) }
+  app_configuration = { for name, account in var.accounts : name => merge(account, { "app_display_name" = var.app_display_name, app_settings_json = var.app_settings_json }) }
 
 
   #-------------------------------------------------------------------------------------------------------------------------------------
@@ -145,7 +145,7 @@ resource "googleworkspace_role_assignment" "role_assignment" {
 
 module "saml-app" {
   source            = "../saml-app/"
-  accounts          = var.google_workspace_accounts
+  accounts          = var.accounts
   okta_appname      = var.okta_appname
   app_configuration = local.app_configuration
   user_assignments  = local.app_user_assignments
