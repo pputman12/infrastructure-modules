@@ -12,11 +12,14 @@ variable "vault_github_secrets_path" {
   description = "The path to access the okta credentials in Vault"
   type        = string
 }
-variable "vault_aws_secrets_path" {
+variable "vault_aws_secrets_access_key_path" {
   description = "The path to access the aws credentials in Vault"
   type        = string
 }
-
+variable "vault_aws_secrets_access_key_path" {
+  description = "The path to access the aws credentials in Vault"
+  type        = string
+}
 variable "github_api_token" {
   type = string
 }

@@ -29,9 +29,15 @@ data "vault_generic_secret" "github_creds" {
   path = var.vault_github_secrets_path
 }
 
-data "vault_generic_secret" "aws_creds" {
-  path = var.vault_aws_secrets_path
+data "vault_generic_secret" "aws_access_key" {
+  path = var.vault_aws_secrets_access_key_path
 }
+
+
+data "vault_generic_secret" "aws_secret_key" {
+  path = var.vault_aws_secrets_secret_key_path
+}
+
 
 provider "github" {
   token = data.vault_generic_secret.github_creds.data[var.github_api_token]
