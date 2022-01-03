@@ -48,7 +48,7 @@ provider "github" {
 resource "github_repository" "github-action-terraform" {
   name          = "github-action-terraform"
   description   = "Continuous Integration with GitHub Actions and HashiCorp Terraform"
-  visibility    = public
+  visibility    = "public"
   has_projects  = false
   has_wiki      = false
   has_downloads = false
