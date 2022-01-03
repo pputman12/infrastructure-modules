@@ -45,8 +45,8 @@ provider "github" {
 }
 
 
-resource "github_repository" "github-action-terraform" {
-  name          = "github-action-terraform"
+resource "github_repository" "terraform-repo" {
+  name          = var.github_repo
   description   = "Continuous Integration with GitHub Actions and HashiCorp Terraform"
   visibility    = "public"
   has_projects  = false
@@ -56,17 +56,17 @@ resource "github_repository" "github-action-terraform" {
   topics = ["example", "public", "ci", "continuous-integration", "terraform", "github", "github-actions"]
 }
 
-resource "github_actions_secret" "github-action-terraform-access-key" {
+resource "github_actions_secret" "terraform-repo-aws-access-key" {
   repository       = "github-action-terraform"
   secret_name      = "AWS_ACCESS_KEY_ID"
   plaintext_value  = data.vault_generic_secret.aws_access_key.data[var.aws_access_key]
-  depends_on       = [github_repository.github-action-terraform]
+  depends_on       = [github_repository.terraform-repo]
 }
 
-resource "github_actions_secret" "github-action-terraform-secret-key" {
+resource "github_actions_secret" "terraform-repo-secret-key" {
   repository       = "github-action-terraform"
   secret_name      = "AWS_SECRET_ACCESS_KEY"
   plaintext_value  = data.vault_generic_secret.aws_secret_key.data[var.aws_secret_key]
-  depends_on       = [github_repository.github-action-terraform]
+  depends_on       = [github_repository.terraform-repo]
 
 }

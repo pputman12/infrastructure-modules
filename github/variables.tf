@@ -24,6 +24,10 @@ variable "github_api_token" {
   type = string
 }
 
+variable "github_repo" {
+  type = string
+}
+
 variable "aws_secret_key" {
   type = string
 }
