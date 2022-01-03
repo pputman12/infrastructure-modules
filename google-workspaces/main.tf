@@ -31,6 +31,10 @@ data "vault_generic_secret" "okta_creds" {
   path = var.vault_okta_secret_path
 }
 
+data "vault_generic_secret" "google_credentials"{
+  path = var.vault_google_credentials_path
+}
+
 
 #-------------------------------------------------------------------------------------------------------------------------------------
 # GOOGLE CREDENTIALS
@@ -41,7 +45,7 @@ data "vault_generic_secret" "okta_creds" {
 provider "googleworkspace" {
   customer_id             = var.google_customer_id
   impersonated_user_email = var.google_impersonated_user_email
-  credentials             = file(var.google_credentials)
+  credentials             = data.vault_generic_secret.google_credentials.data[var.google_credentials]
   oauth_scopes            = var.google_oauth_scopes 
 }
 

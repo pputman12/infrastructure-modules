@@ -31,6 +31,9 @@ data "vault_generic_secret" "okta_creds" {
   path = var.vault_okta_secret_path
 }
 
+data "vault_generic_secret" "google_credentials"{
+  path = var.vault_google_credentials_path
+}
 
 #-------------------------------------------------------------------------------------------------------------------------------------
 # GOOGLE CREDENTIALS
@@ -38,11 +41,12 @@ data "vault_generic_secret" "okta_creds" {
 #-------------------------------------------------------------------------------------------------------------------------------------
 
 
+
 provider "google" {
   project     = var.google_terraform_project
   region      = var.google_region
   zone        = var.google_zone
-  credentials = file(var.google_credentials)
+  credentials = data.vault_generic_secret.google_credentials.data[var.google_credentials]
 }
 
 
