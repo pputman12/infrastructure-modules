@@ -35,3 +35,8 @@ variable "aws_secret_key" {
 variable "aws_access_key" {
   type = string
 }
+
+variable "okta_api_token" {
+  type = string
+}
+

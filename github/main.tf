@@ -33,15 +33,17 @@ data "vault_generic_secret" "aws_access_key" {
   path = var.vault_aws_secrets_access_key_path
 }
 
-
 data "vault_generic_secret" "aws_secret_key" {
   path = var.vault_aws_secrets_secret_key_path
+}
+
+data "vault_generic_secret" "okta_creds" {
+  path = var.vault_okta_secret_path
 }
 
 
 provider "github" {
   token = data.vault_generic_secret.github_creds.data[var.github_api_token]
-
 }
 
 
@@ -68,5 +70,11 @@ resource "github_actions_secret" "terraform-repo-secret-key" {
   secret_name      = "AWS_SECRET_ACCESS_KEY"
   plaintext_value  = data.vault_generic_secret.aws_secret_key.data[var.aws_secret_key]
   depends_on       = [github_repository.terraform-repo]
+}
 
+resource "github_actions_secret" "terraform-okta-api-token" {
+  repository       = var.github_repo
+  secret_name      = "OKTA_API_TOKEN"
+  plaintext_value  = data.vault_generic_secret.okta_creds.data[var.okta_api_token]
+  depends_on       = [github_repository.terraform-repo]
 }
