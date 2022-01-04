@@ -18,6 +18,10 @@ variable "vault_google_credentials_path" {
   type        = string
 }
 
+variable "vault_google_workspace_password_path" {
+  description = "default password for google"
+  type        = string
+}
 
 #-------------------------------------------------------------------------------------------------------------------------------------
 # OKTA API CREDENTIALS
@@ -40,7 +44,9 @@ variable "okta_api_token" {
 
 
 
-
+variable "google_workspace_pass" {
+  type = string
+}
 
 variable "google_customer_id" {
   type = string

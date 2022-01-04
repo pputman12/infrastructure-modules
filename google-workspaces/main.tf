@@ -31,10 +31,13 @@ data "vault_generic_secret" "okta_creds" {
   path = var.vault_okta_secret_path
 }
 
-data "vault_generic_secret" "google_credentials"{
+data "vault_generic_secret" "google_credentials" {
   path = var.vault_google_credentials_path
 }
 
+data "vault_generic_secret" "workspace_password" {
+  path = var.vault_google_workspace_password_path
+}
 
 #-------------------------------------------------------------------------------------------------------------------------------------
 # GOOGLE CREDENTIALS
@@ -48,6 +51,8 @@ provider "googleworkspace" {
   credentials             = data.vault_generic_secret.google_credentials.data[var.google_credentials]
   oauth_scopes            = var.google_oauth_scopes 
 }
+
+
 
 
 #-------------------------------------------------------------------------------------------------------------------------------------
@@ -123,9 +128,8 @@ locals {
 resource "googleworkspace_user" "users" {
   for_each      = { for user in local.workspace_users : user.email => user }
   primary_email = each.key
-  password       = "DebianIsTheBest98"
-  #password      = "34819d7beeabb9260a5c854bc85b3e44"
-  #hash_function = "MD5"
+  password      = data.vault_generic_secret.workspace_paswords.data[var.google_workspace_pass]
+  hash_function = "MD5"
 
   name {
     family_name = each.value.last_name
