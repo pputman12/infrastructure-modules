@@ -125,7 +125,7 @@ locals {
 
   role_ids_to_user_ids = flatten([ for user in local.created_workspace_users : [ for role in user.gwsRoles : { "user_id" = user.id, "role_id" = data.googleworkspace_role.roles["${role}"].id, "role_name" = role, "email" = user.email }]])
 
-  suspended_users = [ for user in data.googleworkspace_users.existing-workspace-users : user if !contains(local.workspace_users, user)]
+  suspended_users = [ for user in data.googleworkspace_users.existing-workspace-users : user if !contains(googleworkspace_user.users, user)]
 
   app_user_assignments = flatten([ for username, user in local.workspace_users : distinct([ for role in user.google : { "user" = user.login, "account_name" = role, "user_id" = user.id }])])
 }
