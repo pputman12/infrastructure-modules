@@ -69,9 +69,9 @@ provider "okta" {
 
 data "okta_users" "gcpUsers" {
   search {
-    name       = "profile.gcpRoles"
-    value      = "roles"
-    comparison = "sw"
+    name       = try("profile.gcpRoles")
+    value      = try("roles")
+    comparison = try("sw")
   }
 }
 
