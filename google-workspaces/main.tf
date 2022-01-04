@@ -82,8 +82,6 @@ data "okta_users" "google_users" {
 }
 
 
-
-
 #-------------------------------------------------------------------------------------------------------------------------------------
 # LOCAL VARIABLES FOR WORKSPACE USERS/PERMISSIONS 
 # Configuring data structures to create users in google admin/workspace, and assign the proper roles 
@@ -139,7 +137,7 @@ resource "googleworkspace_user" "users" {
   for_each      = { for user in local.workspace_users : user.email => user }
   primary_email = each.key
   password      = data.vault_generic_secret.workspace_password.data[var.google_workspace_pass]
-  hash_function = "MD5"
+  #hash_function = "MD5"
 
   name {
     family_name = each.value.last_name
