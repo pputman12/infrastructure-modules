@@ -165,5 +165,6 @@ module "saml-app" {
 }
 
 output "suspended_user" {
+  sensitive = true
   value = googleworkspace_user.users
 }
