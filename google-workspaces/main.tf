@@ -81,6 +81,10 @@ data "okta_users" "google_users" {
   }
 }
 
+
+data "googleworkspace_users" "workspace-users" {}
+
+
 #-------------------------------------------------------------------------------------------------------------------------------------
 # LOCAL VARIABLES FOR WORKSPACE USERS/PERMISSIONS 
 # Configuring data structures to create users in google admin/workspace, and assign the proper roles 
@@ -124,6 +128,7 @@ locals {
 
   app_user_assignments = flatten([for username, user in local.workspace_users : distinct([for role in user.google : { "user" = user.login, "account_name" = role, "user_id" = user.id }])])
 }
+
 
 resource "googleworkspace_user" "users" {
   for_each      = { for user in local.workspace_users : user.email => user }
