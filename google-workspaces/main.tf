@@ -123,8 +123,9 @@ locals {
 resource "googleworkspace_user" "users" {
   for_each      = { for user in local.workspace_users : user.email => user }
   primary_email = each.key
-  password      = "34819d7beeabb9260a5c854bc85b3e44"
-  hash_function = "MD5"
+  password       = "test123456789"
+  #password      = "34819d7beeabb9260a5c854bc85b3e44"
+  #hash_function = "MD5"
 
   name {
     family_name = each.value.last_name
