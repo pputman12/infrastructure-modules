@@ -131,7 +131,7 @@ locals {
   app_user_assignments = flatten([ for username, user in local.workspace_users : distinct([ for role in user.google : { "user" = user.login, "account_name" = role, "user_id" = user.id }])])
 }
 
-data "googleworkspace_users" "existing.workspace-users" {}
+data "googleworkspace_users" "existing-workspace-users" {}
 
 
 
