@@ -8,8 +8,3 @@ output "workspace-admin-roles" {
   sensitive = true
 }
 
-
-output "workspace_users_data" {
-  value = data.googleworkspace_users.workspace-users.users
-}
-
