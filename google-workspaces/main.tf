@@ -154,21 +154,16 @@ resource "googleworkspace_user" "suspended_users" {
   suspended     = true
   #hash_function = "MD5"
 
-
   dynamic "name" {
     for_each = each.value.name
     content {
       family_name  = name.value.family_name
       given_name  = name.value.given_name
     }
-}
-
-
-  name {
-    family_name = { for name in each.value.last_name
-    given_name  = each.value.first_name
   }
 }
+
+
 
 
 
