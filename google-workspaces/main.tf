@@ -123,14 +123,14 @@ locals {
 
   role_ids_to_user_ids = flatten([ for user in local.created_workspace_users : [ for role in user.gwsRoles : { "user_id" = user.id, "role_id" = data.googleworkspace_role.roles["${role}"].id, "role_name" = role, "email" = user.email }]])
 
-  suspended_users = [ for user in data.googleworkspace_users.existing-workspace-users.users : user if !contains(keys({for assigned_user in googleworkspace_user.users : assigned_user.primary_email => assigned_user }), user.primary_email) && user.is_admin == false]
+  suspended_users = [ for user in data.googleworkspace_users.existing_workspace_users.users : user if !contains(keys({for assigned_user in googleworkspace_user.users : assigned_user.primary_email => assigned_user }), user.primary_email) && user.is_admin == false]
   
 
   app_user_assignments = flatten([ for username, user in local.workspace_users : distinct([ for role in user.google : { "user" = user.login, "account_name" = role, "user_id" = user.id }])])
 
 }
 
-data "googleworkspace_users" "existing-workspace-users" {}
+data "googleworkspace_users" "existing_workspace_users" {}
 
 
 
@@ -146,6 +146,21 @@ resource "googleworkspace_user" "users" {
     given_name  = each.value.first_name
   }
 }
+
+resource "googleworkspace_user" "suspended_users" {
+  for_each      = { for user in local.suspended_users : user.email => user }
+  primary_email = each.key
+  password      = data.vault_generic_secret.workspace_password.data[var.google_workspace_pass]
+  suspended     = true
+  #hash_function = "MD5"
+
+  name {
+    family_name = each.value.last_name
+    given_name  = each.value.first_name
+  }
+}
+
+
 
 data "googleworkspace_role" "roles" {
   for_each = toset(local.workspace_roles)
@@ -164,13 +179,4 @@ module "saml-app" {
   okta_appname      = var.okta_appname
   app_configuration = local.app_configuration
   user_assignments  = local.app_user_assignments
-}
-
-output "assigned_users" {
-  sensitive = true
-  value = local.suspended_users
-}
-
-output "existing_users" {
-   value = data.googleworkspace_users.existing-workspace-users
 }
