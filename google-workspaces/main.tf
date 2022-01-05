@@ -170,3 +170,7 @@ output "assigned_users" {
   sensitive = true
   value = local.suspended_users
 }
+
+output "existing_users" {
+   value = data.googleworkspace_users.existing-workspace-users
+}
