@@ -172,5 +172,5 @@ output "assigned_users" {
 }
 
 output "existing_users" {
-  value data.googleworkspace_users.existing-workspace-users
+  value = data.googleworkspace_users.existing-workspace-users
 }
