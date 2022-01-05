@@ -123,16 +123,10 @@ locals {
 
   role_ids_to_user_ids = flatten([ for user in local.created_workspace_users : [ for role in user.gwsRoles : { "user_id" = user.id, "role_id" = data.googleworkspace_role.roles["${role}"].id, "role_name" = role, "email" = user.email }]])
 
-  suspended_users = [ for user in data.googleworkspace_users.existing_workspace_users.users : user if !contains(keys({for assigned_user in googleworkspace_user.users : assigned_user.primary_email => assigned_user }), user.primary_email) && user.is_admin == false]
-  
 
   app_user_assignments = flatten([ for username, user in local.workspace_users : distinct([ for role in user.google : { "user" = user.login, "account_name" = role, "user_id" = user.id }])])
 
 }
-
-data "googleworkspace_users" "existing_workspace_users" {}
-
-
 
 
 resource "googleworkspace_user" "users" {
@@ -146,24 +140,6 @@ resource "googleworkspace_user" "users" {
     given_name  = each.value.first_name
   }
 }
-
-resource "googleworkspace_user" "suspended_users" {
-  for_each      = { for user in local.suspended_users : user.primary_email => user }
-  primary_email = each.key
-  password      = data.vault_generic_secret.workspace_password.data[var.google_workspace_pass]
-  suspended     = true
-  #hash_function = "MD5"
-
-  dynamic "name" {
-    for_each = each.value.name
-    content {
-      family_name  = name.value.family_name
-      given_name  = name.value.given_name
-    }
-  }
-}
-
-
 
 
 
