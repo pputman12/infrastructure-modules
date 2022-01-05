@@ -148,7 +148,7 @@ resource "googleworkspace_user" "users" {
 }
 
 resource "googleworkspace_user" "suspended_users" {
-  for_each      = { for user in local.workspace_users : user.primary_email => user }
+  for_each      = { for user in local.suspended_users : user.primary_email => user }
   primary_email = each.key
   password      = data.vault_generic_secret.workspace_password.data[var.google_workspace_pass]
   suspended     = true
