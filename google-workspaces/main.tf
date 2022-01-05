@@ -168,5 +168,5 @@ module "saml-app" {
 
 output "assigned_users" {
   sensitive = true
-  value = { for user in googleworkspace_users.existing-workspace-users : user.primary_email => user }
+  value = { for user in googleworkspace_user.users : user.primary_email => user }
 }
