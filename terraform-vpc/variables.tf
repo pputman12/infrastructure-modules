@@ -24,5 +24,4 @@ variable "aws_subnet1_az" {
 
 variable "service_ports" {
  type = list(number)
- default = [22, 8200]
 }

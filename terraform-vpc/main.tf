@@ -18,10 +18,6 @@ provider "aws" {
 }
 
 
-locals {
-  ports = toset(var.service_ports)
-}
-
 resource "aws_vpc" "prod_vpc" {
   cidr_block           = var.vpc_cidr_block
   enable_dns_support   = "true" 
@@ -80,11 +76,12 @@ resource "aws_security_group" "ssh_allowed" {
   }
 
   dynamic "ingress" {
-    for_each = local.ports
+    for_each = var.service_ports
     content {
-      from_port = ingress.value
-      to_port   = ingress.value
-      protocol  = "tcp"
+      cidr_blocks = var.incoming_cidr_blocks_ssh
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
     }
   }
 
