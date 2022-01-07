@@ -27,7 +27,7 @@ provider "aws" {
 resource "aws_instance" "ec2_instance" {
   ami                    = var.ami_id
   instance_type          = var.instance_type
-  vpc_security_group_ids = var.security_groups 
+  vpc_security_group_ids = [var.security_groups]
   subnet_id              = var.instance_subnet_id
   tags = {
     Name = "${var.namespace}-instance"
