@@ -3,7 +3,7 @@ output "external_vpc" {
 }
 
 output "external_subnet" {
-  value = aws_subnet.prod_subnet_public_1
+  value = aws_subnet.prod_subnet_public_1.id
 }
 
 output "ssh_security_group" {

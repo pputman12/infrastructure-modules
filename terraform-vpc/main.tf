@@ -84,5 +84,3 @@ resource "aws_security_group" "ssh_allowed" {
     Name = "ssh-allowed"
   }
 }
-
-
