@@ -23,5 +23,4 @@ variable "aws_subnet1_az" {
 }
 
 variable "service_ports" {
-  type = list(number)
 }
