@@ -47,40 +47,19 @@ data "aws_ami" "ami" {
 resource "aws_instance" "ec2_instance" {
   ami                    = data.aws_ami.aws_ami.id
   instance_type          = var.instance_type
-  vpc_security_group_ids = [aws_security_group.ec2_instance_sg.id]
+  vpc_security_group_ids = var.security_groups 
   subnet_id              = var.instance_subnet_id
   tags = {
     Name = "${var.namespace}-instance"
   }
+  key_name = aws_key_pair.ssh-key-pair.id
 }
 
 resource "aws_eip" "ec2_instance_ip" {
   instance = aws_instance.ec2_instance.id
 }
 
-resource "aws_security_group" "ec2_instance_sg" {
-  name        = "${var.namespace}-sg"
-  description = "${var.namespace} security group for Port ${var.port}"
-  vpc_id       = var.vpc_id
-
-  ingress {
-    for_each 
-    description = "Port ${port.name"
-    from_port   = var.port
-    to_port     = var.port
-    protocol    = var.port_protocol
-    cidr_blocks = var.inbound_cidr_blocks
-  }
-
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-}
-
-output "ec2_instance_ip" {
-  value = aws_eip.ec2_instance_ip.public_ip
+resource "aws_key_pair" "ssh-key-pair" {
+    key_name = "${var.namespace}-key-pair"
+    public_key = file(var.PUBLIC_KEY_PATH)
 }

@@ -32,7 +32,7 @@ variable "virtualization_type" {
 }
 
 variable "instance_type" {
-  type = string
+  type    = string
   default = "t2.micro"
 }
 
@@ -44,3 +44,10 @@ variable "instance_subnet_id" {
   type = string
 }
 
+variable "security_groups" {
+  type = list(string)
+}
+
+variable "PUBLIC_KEY_PATH" {
+  type = string
+}
