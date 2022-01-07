@@ -8,7 +8,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3"
+      version = "~> 3.0"
     }
   }
 }
@@ -40,12 +40,12 @@ data "aws_ami" "ami" {
 
   filter {
     name   = "virtualization-type"
-    values = var.virtialization_type
+    values = var.virtualization_type
   }
 }
 
 resource "aws_instance" "ec2_instance" {
-  ami                    = data.aws_ami.aws_ami.id
+  ami                    = data.aws_ami.ami.id
   instance_type          = var.instance_type
   vpc_security_group_ids = var.security_groups 
   subnet_id              = var.instance_subnet_id
