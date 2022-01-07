@@ -36,6 +36,3 @@ variable "PUBLIC_KEY_PATH" {
   type = string
 }
 
-variable "ports" {
-  type = list(string)
-}
