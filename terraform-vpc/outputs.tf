@@ -7,5 +7,5 @@ output "external_subnet" {
 }
 
 output "ssh_security_group" {
-   value = aws_security_group.ssh_allowed
+   value = [aws_security_group.ssh_allowed.id]
 }

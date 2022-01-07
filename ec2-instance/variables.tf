@@ -13,12 +13,10 @@ variable "namespace" {
 
 variable "ami_owners" {
   type    = list(string)
-  default = ["679593333241"]
 }
 
 variable "ami_name_search" {
   type    = list(string)
-  default = ["hashicorp/marketplace/vault"]
 }
 
 variable "root_device_type" {
