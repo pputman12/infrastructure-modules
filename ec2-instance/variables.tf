@@ -43,7 +43,7 @@ variable "instance_subnet_id" {
 }
 
 variable "security_groups" {
-  type = list(string)
+  type = list(number)
 }
 
 variable "PUBLIC_KEY_PATH" {
