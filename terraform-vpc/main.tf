@@ -76,7 +76,7 @@ resource "aws_security_group" "ssh_allowed" {
   }
 
   dynamic "ingress" {
-    for_each = var.service_ports
+    for_each = toset(var.service_ports)
     content {
       from_port = ingress.value
       to_port   = ingress.value
