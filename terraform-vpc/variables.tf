@@ -21,3 +21,7 @@ variable "aws_subnet1_az" {
   type = string
 #  default = "us-east-2a"
 }
+
+variable "service_ports" {
+  type = list
+}

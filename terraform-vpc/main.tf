@@ -74,13 +74,17 @@ resource "aws_security_group" "ssh_allowed" {
     protocol    = -1
     cidr_blocks = ["0.0.0.0/0"]
   }
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = var.incoming_cidr_blocks_ssh
+
+  dynamic "ingress" {
+    for_each = var.service_ports
+    content {
+      from_port = ingress.value
+      to_port   = ingress.value
+      protocol  = "tcp"
+    }
   }
-  tags = {
-    Name = "ssh-allowed"
+
+    tags = {
+    Name = "terraform-sg"
   }
 }
