@@ -23,29 +23,9 @@ provider "aws" {
 }
 
 
-data "aws_ami" "ami" {
-  executable_users = ["self"]
-  most_recent      = true
-  owners           = var.ami_owners
-
-  filter {
-    name   = "name"
-    values = var.ami_name_search
-  }
-
-  filter {
-    name   = "root-device-type"
-    values = var.root_device_type
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = var.virtualization_type
-  }
-}
 
 resource "aws_instance" "ec2_instance" {
-  ami                    = data.aws_ami.ami.id
+  ami                    = var.ami_id
   instance_type          = var.instance_type
   vpc_security_group_ids = var.security_groups 
   subnet_id              = var.instance_subnet_id

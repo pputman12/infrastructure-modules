@@ -11,22 +11,8 @@ variable "namespace" {
   type = string
 }
 
-variable "ami_owners" {
-  type    = list(string)
-}
-
-variable "ami_name_search" {
-  type    = list(string)
-}
-
-variable "root_device_type" {
-  type    = list(string)
-  default = ["ebs"]
-}
-
-variable "virtualization_type" {
-  type    = list(string)
-  default = ["hvm"]
+variable "ami_id" {
+  type   = string
 }
 
 variable "instance_type" {
