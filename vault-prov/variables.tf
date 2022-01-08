@@ -8,6 +8,8 @@ variable "vault_address" {
 }
 
 
-variable "aws_access_key" {}
-variable "aws_secret_key" {}
-variable "name" { default = "dynamic-aws-creds-vault-admin" }
+variable "AWS_ACCESS_KEY" {}
+variable "AWS_SECRET_KEY" {}
+variable "name" {
+  default = "dynamic-aws-creds-vault-admin"
+}
