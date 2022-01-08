@@ -7,6 +7,13 @@ variable "vault_address" {
   type        = string
 }
 
+variable "backend_bucket" {
+  type = string
+}
+
+variable "backend_key" {
+  type = string
+}
 
 variable "ttl" {
   type    = string

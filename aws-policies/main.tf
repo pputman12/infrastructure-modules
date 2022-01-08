@@ -22,13 +22,15 @@ provider "vault" {
 }
 
 
-
 data "terraform_remote_state" "admin" {
   backend = s3
 
-    config = {
-      region = var.aws_region
-    }
+  config = {
+    bucket  = var.backend_bucket
+    key     = var.backend_key
+    region  = var.aws_region
+    encrypt = true
+  }
 }
 
 data "vault_aws_access_credentials" "creds" {
