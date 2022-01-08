@@ -17,9 +17,9 @@ terraform {
 data "terraform_remote_state" "admin" {
   backend = var.backend
 
-  config = {
-    path = var.backend_path
-  }
+#  config = {
+#    path = var.backend_path
+#  }
 }
 
 data "vault_aws_access_credentials" "creds" {
