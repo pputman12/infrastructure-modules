@@ -2,21 +2,18 @@ variable "aws_region" {
   type = string
 }
 
-
-variable "aws_region" {
-  type = string
-}
-
 variable "backend" {
-  type    = string
-  default = "s3"
+  description = "Backend path to look for aws credentials"
+  type        = string
+  default     = "s3"
 }
 
 variable "backend_path" {
-  decription = "path in the backend to look for the tfstate"
-  type       = string
-  default    = "../vault-admin-workspace/terraform.tfstate"
+  description = "path in the backend to look for the tfstate"
+  type        = string
+  default     = "../vault-admin-workspace/terraform.tfstate"
 }
+
 variable "ttl" {
   type    = string
   default = "1"
