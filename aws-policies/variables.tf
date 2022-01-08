@@ -8,11 +8,11 @@ variable "backend" {
   default     = "s3"
 }
 
-variable "backend_path" {
-  description = "path in the backend to look for the tfstate"
-  type        = string
-  default     = "../vault-admin-workspace/terraform.tfstate"
-}
+#variable "backend_path" {
+#  description = "path in the backend to look for the tfstate"
+#  type        = string
+#  default     = "../vault-admin-workspace/terraform.tfstate"
+#}
 
 variable "ttl" {
   type    = string
