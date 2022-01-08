@@ -7,6 +7,19 @@ variable "aws_region" {
   type = string
 }
 
+variable "vault_address" {
+  description = "Address to access credentials through vault"
+  type        = string
+}
+
+variable "backend_bucket" {
+  type = string
+}
+
+variable "backend_key" {
+  type = string
+}
+
 variable "namespace" {
   type = string
 }

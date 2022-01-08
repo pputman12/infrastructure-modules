@@ -2,6 +2,19 @@ variable "aws_region" {
   type = string
 }
 
+variable "vault_address" {
+  description = "Address to access credentials through vault"
+  type        = string
+}
+
+variable "backend_bucket" {
+  type = string
+}
+
+variable "backend_key" {
+  type = string
+}
+
 variable "vpc_cidr_block" {
   type = string
   #  default = "10.0.0.0/16"
@@ -24,3 +37,7 @@ variable "aws_subnet1_az" {
 variable "service_ports" {
   type = list(number)
 }
+
+
+
+
