@@ -14,6 +14,17 @@ variable "vault_okta_secret_path" {
 }
 
 
+variable "backend_bucket" {
+  description = "Bucket to pull aws credentials from"
+  type  = string
+}
+
+variable "backend_key" {
+  description = "Key in s3 bucket to pull credentials from"
+  type = string
+}
+
+
 #-------------------------------------------------------------------------------------------------------------------------------------
 # OKTA CREDENTIAL VARIABLES 
 # Variables for Okta credentials
