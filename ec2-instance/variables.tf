@@ -12,7 +12,7 @@ variable "namespace" {
 }
 
 variable "ami_id" {
-  type   = string
+  type = string
 }
 
 variable "instance_type" {
@@ -29,7 +29,7 @@ variable "instance_subnet_id" {
 }
 
 variable "security_groups" {
-#  type = list(number)
+  #  type = list(number)
 }
 
 variable "PUBLIC_KEY_PATH" {

@@ -31,7 +31,7 @@ data "vault_generic_secret" "okta_creds" {
   path = var.vault_okta_secret_path
 }
 
-data "vault_generic_secret" "google_credentials"{
+data "vault_generic_secret" "google_credentials" {
   path = var.vault_google_credentials_path
 }
 
@@ -88,7 +88,7 @@ locals {
   cloud_app_users            = flatten([for user in data.okta_users.gcpUsers.users : merge(user, jsondecode(user.custom_profile_attributes))])
   cloud_app_user_assignments = flatten([for user in local.cloud_app_users : distinct([for role in user.gcpRoles : { "user" = user.email, "account_name" = element(split("|", role), 1), "user_id" = user.id }])])
 
-  cloud_role_assignments     = flatten([for user in local.cloud_app_users : [for role in user.gcpRoles : { "project" = element(split("|", role), 2), "account" = element(split("|", role), 1), "role" = element(split("|", role), 0), "user" = "user:${user.email}" } if contains(keys(var.accounts), element(split("|", role), 1))]])
+  cloud_role_assignments = flatten([for user in local.cloud_app_users : [for role in user.gcpRoles : { "project" = element(split("|", role), 2), "account" = element(split("|", role), 1), "role" = element(split("|", role), 0), "user" = "user:${user.email}" } if contains(keys(var.accounts), element(split("|", role), 1))]])
 }
 
 

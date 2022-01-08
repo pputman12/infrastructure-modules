@@ -4,7 +4,7 @@
 #-------------------------------------------------------------------------------------------------------------------------------------
 
 terraform {
-  required_version = "~> 1.1.0" 
+  required_version = "~> 1.1.0"
   required_providers {
     github = {
       source  = "integrations/github"
@@ -48,33 +48,33 @@ provider "github" {
 
 
 resource "github_repository" "terraform-repo" {
-  name          = var.github_repo
-  description   = "Continuous Integration with GitHub Actions and HashiCorp Terraform"
-  visibility    = "public"
-  has_projects  = false
-  has_wiki      = false
-  has_downloads = false
+  name             = var.github_repo
+  description      = "Continuous Integration with GitHub Actions and HashiCorp Terraform"
+  visibility       = "public"
+  has_projects     = false
+  has_wiki         = false
+  has_downloads    = false
   license_template = "mit"
-  topics = ["example", "public", "ci", "continuous-integration", "terraform", "github", "github-actions"]
+  topics           = ["example", "public", "ci", "continuous-integration", "terraform", "github", "github-actions"]
 }
 
 resource "github_actions_secret" "terraform-repo-aws-access-key" {
-  repository       = var.github_repo
-  secret_name      = "AWS_ACCESS_KEY_ID"
-  plaintext_value  = data.vault_generic_secret.aws_access_key.data[var.aws_access_key]
-  depends_on       = [github_repository.terraform-repo]
+  repository      = var.github_repo
+  secret_name     = "AWS_ACCESS_KEY_ID"
+  plaintext_value = data.vault_generic_secret.aws_access_key.data[var.aws_access_key]
+  depends_on      = [github_repository.terraform-repo]
 }
 
 resource "github_actions_secret" "terraform-repo-secret-key" {
-  repository       = var.github_repo
-  secret_name      = "AWS_SECRET_ACCESS_KEY"
-  plaintext_value  = data.vault_generic_secret.aws_secret_key.data[var.aws_secret_key]
-  depends_on       = [github_repository.terraform-repo]
+  repository      = var.github_repo
+  secret_name     = "AWS_SECRET_ACCESS_KEY"
+  plaintext_value = data.vault_generic_secret.aws_secret_key.data[var.aws_secret_key]
+  depends_on      = [github_repository.terraform-repo]
 }
 
 resource "github_actions_secret" "terraform-okta-api-token" {
-  repository       = var.github_repo
-  secret_name      = "OKTA_API_TOKEN"
-  plaintext_value  = data.vault_generic_secret.okta_creds.data[var.okta_api_token]
-  depends_on       = [github_repository.terraform-repo]
+  repository      = var.github_repo
+  secret_name     = "OKTA_API_TOKEN"
+  plaintext_value = data.vault_generic_secret.okta_creds.data[var.okta_api_token]
+  depends_on      = [github_repository.terraform-repo]
 }

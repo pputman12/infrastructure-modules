@@ -36,7 +36,7 @@ variable "okta_account_url" {
 }
 
 variable "okta_api_token" {
-  type    = string
+  type = string
 }
 
 
@@ -51,15 +51,15 @@ variable "google_terraform_project" {
 }
 
 variable "google_region" {
-  type        = string
+  type = string
 }
 
 variable "google_zone" {
-  type        = string
+  type = string
 }
 
 variable "google_credentials" {
- type         = string
+  type = string
 }
 
 

@@ -49,7 +49,7 @@ provider "googleworkspace" {
   customer_id             = var.google_customer_id
   impersonated_user_email = var.google_impersonated_user_email
   credentials             = data.vault_generic_secret.google_credentials.data[var.google_credentials]
-  oauth_scopes            = var.google_oauth_scopes 
+  oauth_scopes            = var.google_oauth_scopes
 }
 
 
@@ -102,7 +102,7 @@ locals {
   # Builds a list of all users matching the google search, decoding the custom attributes (that we search on)  and merging them into the list 
   #-------------------------------------------------------------------------------------------------------------------------------------
 
-  workspace_users = flatten([ for search in data.okta_users.google_users : [ for user in search.users : merge(user, jsondecode(user.custom_profile_attributes))]])
+  workspace_users = flatten([for search in data.okta_users.google_users : [for user in search.users : merge(user, jsondecode(user.custom_profile_attributes))]])
 
 
   #-------------------------------------------------------------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ locals {
   # Build a list of all the roles needed to feed to the role ID datasource 
   #-------------------------------------------------------------------------------------------------------------------------------------
 
-  workspace_roles = distinct(flatten([ for user in local.workspace_users : [ for role in user.gwsRoles : role]]))
+  workspace_roles = distinct(flatten([for user in local.workspace_users : [for role in user.gwsRoles : role]]))
 
 
   #-------------------------------------------------------------------------------------------------------------------------------------
@@ -119,12 +119,12 @@ locals {
   # to the proper roles
   #-------------------------------------------------------------------------------------------------------------------------------------
 
-  created_workspace_users = flatten([ for user1name, user1 in local.workspace_users : [ for user2name, user2 in googleworkspace_user.users : merge(user1, user2) if user1.email == user2.primary_email]])
+  created_workspace_users = flatten([for user1name, user1 in local.workspace_users : [for user2name, user2 in googleworkspace_user.users : merge(user1, user2) if user1.email == user2.primary_email]])
 
-  role_ids_to_user_ids = flatten([ for user in local.created_workspace_users : [ for role in user.gwsRoles : { "user_id" = user.id, "role_id" = data.googleworkspace_role.roles["${role}"].id, "role_name" = role, "email" = user.email }]])
+  role_ids_to_user_ids = flatten([for user in local.created_workspace_users : [for role in user.gwsRoles : { "user_id" = user.id, "role_id" = data.googleworkspace_role.roles["${role}"].id, "role_name" = role, "email" = user.email }]])
 
 
-  app_user_assignments = flatten([ for username, user in local.workspace_users : distinct([ for role in user.google : { "user" = user.login, "account_name" = role, "user_id" = user.id }])])
+  app_user_assignments = flatten([for username, user in local.workspace_users : distinct([for role in user.google : { "user" = user.login, "account_name" = role, "user_id" = user.id }])])
 
 }
 

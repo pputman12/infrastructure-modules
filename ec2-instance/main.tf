@@ -40,6 +40,6 @@ resource "aws_eip" "ec2_instance_ip" {
 }
 
 resource "aws_key_pair" "ssh-key-pair" {
-    key_name = "${var.namespace}-key-pair"
-    public_key = file(var.PUBLIC_KEY_PATH)
+  key_name   = "${var.namespace}-key-pair"
+  public_key = file(var.PUBLIC_KEY_PATH)
 }

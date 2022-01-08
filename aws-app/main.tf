@@ -66,10 +66,10 @@ locals {
   app_configuration     = { for name, account in var.accounts : name => merge(account, { "app_display_name" = var.app_display_name, app_settings_json = local.app_settings_json }) }
 
 
-#-------------------------------------------------------------------------------------------------------------------------------------
-# AWS APP SETTINGS
-# These settings control the group to aws account - role mapping
-#-------------------------------------------------------------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------------------------------------------------------------
+  # AWS APP SETTINGS
+  # These settings control the group to aws account - role mapping
+  #-------------------------------------------------------------------------------------------------------------------------------------
 
 
   app_settings_json = {
