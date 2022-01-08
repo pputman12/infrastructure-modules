@@ -17,8 +17,8 @@ provider "vault" {
 }
 
 resource "vault_aws_secret_backend" "aws" {
-  access_key = var.aws_access_key
-  secret_key = var.aws_secret_key
+  access_key = var.AWS_ACCESS_KEY  
+  secret_key = var.AWS_SECRET_KEY
   path       = "${var.name}-path"
 
   default_lease_ttl_seconds = "120"
