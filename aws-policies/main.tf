@@ -23,7 +23,7 @@ provider "vault" {
 
 
 data "terraform_remote_state" "admin" {
-  backend = s3
+  backend = "s3"
 
   config = {
     bucket  = var.backend_bucket
