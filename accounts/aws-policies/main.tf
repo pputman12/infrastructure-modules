@@ -29,7 +29,7 @@ data "terraform_remote_state" "admin" {
     bucket  = var.backend_bucket
     key     = var.backend_key
     region  = var.aws_region
-  #  encrypt = true
+    encrypt = true
   }
 }
 

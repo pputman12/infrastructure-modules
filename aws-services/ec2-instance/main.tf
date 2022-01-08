@@ -10,8 +10,19 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 3.0"
     }
+    vault = {
+      source  = "hashicorp/vault"
+      version = "3.1.1"
+    }
   }
 }
+
+provider "vault" {
+  address = var.vault_address
+}
+
+
+
 
 #-------------------------------------------------------------------------------------------------------------------------------------
 # AWS PROVIDER MODULE
@@ -20,6 +31,30 @@ terraform {
 
 provider "aws" {
   region = var.aws_region
+}
+
+
+
+data "terraform_remote_state" "admin" {
+  backend = "s3"
+
+  config = {
+    bucket  = var.backend_bucket
+    key     = var.backend_key
+    region  = var.aws_region
+    encrypt = true
+  }
+}
+
+data "vault_aws_access_credentials" "creds" {
+  backend = data.terraform_remote_state.admin.outputs.backend
+  role    = data.terraform_remote_state.admin.outputs.role
+}
+
+provider "aws" {
+  region     = var.aws_region
+  access_key = data.vault_aws_access_credentials.creds.access_key
+  secret_key = data.vault_aws_access_credentials.creds.secret_key
 }
 
 
