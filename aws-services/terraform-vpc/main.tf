@@ -13,8 +13,37 @@ terraform {
   }
 }
 
+
+provider "vault" {
+  address = var.vault_address
+}
+
+#-------------------------------------------------------------------------------------------------------------------------------------
+# AWS PROVIDER MODULE
+# Lets us use AWS resources
+#-------------------------------------------------------------------------------------------------------------------------------------
+
+
+data "terraform_remote_state" "admin" {
+  backend = "s3"
+
+  config = {
+    bucket  = var.backend_bucket
+    key     = var.backend_key
+    region  = var.aws_region
+    encrypt = true
+  }
+}
+
+data "vault_aws_access_credentials" "creds" {
+  backend = data.terraform_remote_state.admin.outputs.backend
+  role    = data.terraform_remote_state.admin.outputs.role
+}
+
 provider "aws" {
-  region = var.aws_region
+  region     = var.aws_region
+  access_key = data.vault_aws_access_credentials.creds.access_key
+  secret_key = data.vault_aws_access_credentials.creds.secret_key
 }
 
 
