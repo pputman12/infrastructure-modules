@@ -24,11 +24,11 @@ provider "vault" {
 
 
 data "terraform_remote_state" "admin" {
-  backend = var.backend
+  backend = s3
 
-  #  config = {
-  #    path = var.backend_path
-  #  }
+    config = {
+      region = var.aws_region
+    }
 }
 
 data "vault_aws_access_credentials" "creds" {
