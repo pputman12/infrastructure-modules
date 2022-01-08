@@ -10,16 +10,25 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 3.0"
     }
+    vault = {
+      source  = "hashicorp/vault"
+      version = "3.1.1"
+    }
   }
 }
+
+provider "vault" {
+  address = var.vault_address
+}
+
 
 
 data "terraform_remote_state" "admin" {
   backend = var.backend
 
-#  config = {
-#    path = var.backend_path
-#  }
+  #  config = {
+  #    path = var.backend_path
+  #  }
 }
 
 data "vault_aws_access_credentials" "creds" {
