@@ -6,39 +6,51 @@
 terraform {
   required_version = "~> 1.1.0"
   required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+    vault = {
+      source  = "hashicorp/vault"
+      version = "3.1.1"
+    }
     okta = {
       source  = "okta/okta"
       version = "~> 3.20"
     }
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3"
-    }
+
   }
 }
 
-#-------------------------------------------------------------------------------------------------------------------------------------
-# AWS PROVIDER MODULE
-# Lets us use AWS resources
-#-------------------------------------------------------------------------------------------------------------------------------------
-
-provider "aws" {
-  region = var.aws_region
-}
-
-#-------------------------------------------------------------------------------------------------------------------------------------
-# VAULT VARIABLES 
-# Refers to variables for Hashicorp Vault in variables.tf
-#-------------------------------------------------------------------------------------------------------------------------------------
-
 provider "vault" {
   address = var.vault_address
+}
+
+data "terraform_remote_state" "admin" {
+  backend = "s3"
+
+  config = {
+    bucket  = var.backend_bucket
+    key     = var.backend_key
+    region  = var.aws_region
+    encrypt = true
+  }
+}
+
+data "vault_aws_access_credentials" "creds" {
+  backend = data.terraform_remote_state.admin.outputs.backend
+  role    = data.terraform_remote_state.admin.outputs.role
 }
 
 data "vault_generic_secret" "okta_creds" {
   path = var.vault_okta_secret_path
 }
 
+provider "aws" {
+  region     = var.aws_region
+  access_key = data.vault_aws_access_credentials.creds.access_key
+  secret_key = data.vault_aws_access_credentials.creds.secret_key
+}
 
 #-------------------------------------------------------------------------------------------------------------------------------------
 # OKTA CREDENTIALS
