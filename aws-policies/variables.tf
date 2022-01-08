@@ -2,6 +2,12 @@ variable "aws_region" {
   type = string
 }
 
+variable "vault_address" {
+  description = "Address to access credentials through vault"
+  type        = string
+}
+
+
 variable "backend" {
   description = "Backend path to look for aws credentials"
   type        = string
