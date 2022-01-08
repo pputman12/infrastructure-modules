@@ -13,10 +13,6 @@ terraform {
   }
 }
 
-provider "aws" {
-  region = var.aws_region
-}
-
 
 data "terraform_remote_state" "admin" {
   backend = var.backend
@@ -32,7 +28,7 @@ data "vault_aws_access_credentials" "creds" {
 }
 
 provider "aws" {
-  region     = var.region
+  region     = var.aws_region
   access_key = data.vault_aws_access_credentials.creds.access_key
   secret_key = data.vault_aws_access_credentials.creds.secret_key
 }
