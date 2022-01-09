@@ -14,7 +14,7 @@ terraform {
       version = "~> 0.6.0"
     }
     random = {
-      source = "hashicorp/random"
+      source  = "hashicorp/random"
       version = "3.1.0"
     }
 
@@ -87,35 +87,35 @@ data "okta_users" "google_users" {
 
 locals {
 
-#-------------------------------------------------------------------------------------------------------------------------------------
-# APPLICATION CONFIGURATION 
-# Sets the domain to create for the application, its display name, and settings from specified variables 
-#-------------------------------------------------------------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------------------------------------------------------------
+  # APPLICATION CONFIGURATION 
+  # Sets the domain to create for the application, its display name, and settings from specified variables 
+  #-------------------------------------------------------------------------------------------------------------------------------------
 
-app_configuration = { for name, account in var.accounts : name => merge(account, { "app_display_name" = var.app_display_name, app_settings_json = var.app_settings_json }) }
-
-
-#-------------------------------------------------------------------------------------------------------------------------------------
-# GOOGLE WORKSPACE SEARCH
-# Builds a list of all users matching the google search, decoding the custom attributes (that we search on)  and merging them into the list 
-#-------------------------------------------------------------------------------------------------------------------------------------
-
-workspace_users = flatten([for search in data.okta_users.google_users : [for user in search.users : merge(user, jsondecode(user.custom_profile_attributes))]])
+  app_configuration = { for name, account in var.accounts : name => merge(account, { "app_display_name" = var.app_display_name, app_settings_json = var.app_settings_json }) }
 
 
-#-------------------------------------------------------------------------------------------------------------------------------------
-# WORKSPACE ROLES
-# Build a list of all the roles needed to feed to the role ID datasource 
-#-------------------------------------------------------------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------------------------------------------------------------
+  # GOOGLE WORKSPACE SEARCH
+  # Builds a list of all users matching the google search, decoding the custom attributes (that we search on)  and merging them into the list 
+  #-------------------------------------------------------------------------------------------------------------------------------------
 
-workspace_roles = distinct(flatten([for user in local.workspace_users : [for role in user.gwsRoles : role]]))
+  workspace_users = flatten([for search in data.okta_users.google_users : [for user in search.users : merge(user, jsondecode(user.custom_profile_attributes))]])
 
 
-#-------------------------------------------------------------------------------------------------------------------------------------
-# MERGED USER PROFILES
-# This is merging in the old data structure with the new one with the user ids, after the user is created, so we can assign them
-# to the proper roles
-#-------------------------------------------------------------------------------------------------------------------------------------
+  #-------------------------------------------------------------------------------------------------------------------------------------
+  # WORKSPACE ROLES
+  # Build a list of all the roles needed to feed to the role ID datasource 
+  #-------------------------------------------------------------------------------------------------------------------------------------
+
+  workspace_roles = distinct(flatten([for user in local.workspace_users : [for role in user.gwsRoles : role]]))
+
+
+  #-------------------------------------------------------------------------------------------------------------------------------------
+  # MERGED USER PROFILES
+  # This is merging in the old data structure with the new one with the user ids, after the user is created, so we can assign them
+  # to the proper roles
+  #-------------------------------------------------------------------------------------------------------------------------------------
 
   created_workspace_users = flatten([for user1name, user1 in local.workspace_users : [for user2name, user2 in googleworkspace_user.users : merge(user1, user2) if user1.email == user2.primary_email]])
 
@@ -128,8 +128,8 @@ workspace_roles = distinct(flatten([for user in local.workspace_users : [for rol
 
 
 resource "random_password" "password" {
-  length           = 100
-  special          = true
+  length  = 100
+  special = true
 }
 
 resource "googleworkspace_user" "users" {
