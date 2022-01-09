@@ -13,6 +13,10 @@ terraform {
       source  = "hashicorp/googleworkspace"
       version = "~> 0.6.0"
     }
+    random = {
+      source = "hashicorp/random"
+      version = "3.1.0"
+    }
 
   }
 }
@@ -35,9 +39,9 @@ data "vault_generic_secret" "google_credentials" {
   path = var.vault_google_credentials_path
 }
 
-data "vault_generic_secret" "workspace_password" {
-  path = var.vault_google_workspace_password_path
-}
+#data "vault_generic_secret" "workspace_password" {
+#  path = var.vault_google_workspace_password_path
+#}
 
 #-------------------------------------------------------------------------------------------------------------------------------------
 # GOOGLE CREDENTIALS
@@ -129,10 +133,17 @@ locals {
 }
 
 
+resource "random_password" "password" {
+  length           = 100
+  special          = true
+  #override_special = "_%@"
+}
+
 resource "googleworkspace_user" "users" {
   for_each      = { for user in local.workspace_users : user.email => user }
   primary_email = each.key
-  password      = data.vault_generic_secret.workspace_password.data[var.google_workspace_pass]
+  password      = random_password.password.result
+#  password      = data.vault_generic_secret.workspace_password.data[var.google_workspace_pass]
   #hash_function = "MD5"
 
   name {
