@@ -136,6 +136,7 @@ resource "googleworkspace_user" "users" {
   for_each      = { for user in local.workspace_users : user.email => user }
   primary_email = each.key
   password      = random_password.password.result
+  hash_function = "MD5"
 
   name {
     family_name = each.value.last_name
