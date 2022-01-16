@@ -56,6 +56,7 @@ resource "aws_instance" "ec2_instance" {
   instance_type          = var.instance_type
   vpc_security_group_ids = [var.security_groups]
   subnet_id              = var.instance_subnet_id
+  user_data              = var.user_data
   tags = {
     Name = "${var.namespace}-instance"
   }

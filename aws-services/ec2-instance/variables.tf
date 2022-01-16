@@ -49,3 +49,6 @@ variable "PUBLIC_KEY_PATH" {
   type = string
 }
 
+variable "user_data" {
+  type = string
+}
