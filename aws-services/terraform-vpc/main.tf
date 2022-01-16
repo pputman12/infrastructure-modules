@@ -94,7 +94,7 @@ resource "aws_route_table_association" "prod_crta_public_subnet_1" {
   route_table_id = aws_route_table.prod_public_crt.id
 }
 
-resource "aws_security_group" "ssh_allowed" {
+resource "aws_security_group" "ec2_sg" {
   vpc_id = aws_vpc.prod_vpc.id
 
   egress {
@@ -107,7 +107,7 @@ resource "aws_security_group" "ssh_allowed" {
   dynamic "ingress" {
     for_each = var.service_ports
     content {
-      cidr_blocks = var.incoming_cidr_blocks_ssh
+      cidr_blocks = var.incoming_cidr_blocks
       from_port   = ingress.value
       to_port     = ingress.value
       protocol    = "tcp"

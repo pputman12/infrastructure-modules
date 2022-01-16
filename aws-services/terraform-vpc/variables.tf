@@ -25,7 +25,7 @@ variable "subnet_cidr_block" {
   type = string
 }
 
-variable "incoming_cidr_blocks_ssh" {
+variable "incoming_cidr_blocks" {
   type = list(string)
 }
 
