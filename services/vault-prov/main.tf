@@ -21,8 +21,8 @@ resource "vault_aws_secret_backend" "aws" {
   secret_key = var.AWS_SECRET_KEY
   path       = "${var.name}-path"
 
-  default_lease_ttl_seconds = "120"
-  max_lease_ttl_seconds     = "240"
+  default_lease_ttl_seconds = var.default_ttl
+  max_lease_ttl_seconds     = var.max_ttl
 }
 
 

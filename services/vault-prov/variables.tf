@@ -10,6 +10,15 @@ variable "vault_address" {
 
 variable "AWS_ACCESS_KEY" {}
 variable "AWS_SECRET_KEY" {}
+
 variable "name" {
   default = "dynamic-aws-creds-vault-admin"
+}
+
+variable "default_ttl" {
+  default = 120
+}
+
+variable "max_ttl" {
+  default = 240
 }
