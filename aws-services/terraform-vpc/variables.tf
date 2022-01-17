@@ -34,9 +34,6 @@ variable "aws_subnet1_az" {
   #  default = "us-east-2a"
 }
 
-variable "service_ports" {
-  type = list(number)
-}
 
 
 
