@@ -17,8 +17,10 @@ variable "name" {
 
 variable "default_ttl" {
   default = 120
+  type    = number
 }
 
 variable "max_ttl" {
   default = 240
+  type    = number
 }
