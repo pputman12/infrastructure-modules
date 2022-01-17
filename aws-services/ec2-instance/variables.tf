@@ -57,3 +57,6 @@ variable "incoming_cidr_blocks" {
   type = list(string)
 }
 
+variable "user_data" {
+  type = any
+}
