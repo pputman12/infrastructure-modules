@@ -41,10 +41,6 @@ variable "instance_subnet_id" {
   type = string
 }
 
-variable "security_groups" {
-  #  type = list(number)
-}
-
 variable "PUBLIC_KEY_PATH" {
   type = string
 }
@@ -55,5 +51,9 @@ variable "user_data" {
 
 variable "service_ports" {
   type = list(number)
+}
+
+variable "incoming_cidr_blocks" {
+  type = list(string)
 }
 

@@ -25,9 +25,6 @@ variable "subnet_cidr_block" {
   type = string
 }
 
-variable "incoming_cidr_blocks" {
-  type = list(string)
-}
 
 variable "aws_subnet1_az" {
   type = string
